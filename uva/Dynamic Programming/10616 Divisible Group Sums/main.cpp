@@ -11,14 +11,23 @@ unsigned long long int dp[201][21][11];
 int arr[201];
 int n,q,d,m, c;
 
-void solve(int i, int j, int k) {
-	dp[i][abs(j%d)][k]++;
-	cout << "i: " << i << " j: " << j << " k: " << k << " dp: " << dp[i][j][k]<<endl;
+int solve(int i, int j, int k) {
+	//cout << "i: " << i << " j: " << j << " k: " << k << " dp: " << dp[i][j][k]<<endl;
 
-	if(i==n-1) return;
+	if(k<0) return 0;
 
-	if(k>0) solve(i+1, j+arr[i+1], k-1);
-	solve(i+1, j, k);
+	if(k==0) {
+		if (j==0) return 1;
+		return 0;
+	}
+
+	if(i==n) return 0;
+
+	if(dp[i][j][k]!=-1) return dp[i][j][k];
+
+	dp[i][j][k] = solve(i+1, (j+arr[i+1])%d, k-1) + solve(i+1, j%d, k);
+
+	return dp[i][j][k];
 }
 
 int main() {
@@ -28,7 +37,7 @@ int main() {
 
 		cout << "SET " << c << ":" << endl;
 		//memset(dp, 0, sizeof(dp));
-		memset(arr, 0, sizeof(arr));
+		memset(arr, -1, sizeof(arr));
 
 		for(int i=0; i<n; i++) {
 			cin >> arr[i];
@@ -40,10 +49,10 @@ int main() {
 			cin >> d >> m;
 			memset(dp, 0, sizeof(dp));
 
-			solve(0, arr[0], m-1);
-			solve(0, 0, m); 
+			//solve(0, arr[0], m-1);
+			//solve(0, 0, m); 
 
-			cout << "QUERY " << i+1 << ": " << dp[n-1][0][0] << endl;
+			cout << "QUERY " << i+1 << ": " << solve(0,0,m) << endl;
 		}
 		c++;	
 	}

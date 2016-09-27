@@ -14,7 +14,7 @@ int n,q,d,m, c;
 int solve(int i, int j, int k) {
 	//cout << "i: " << i << " j: " << j << " k: " << k << " dp: " << dp[i][j][k]<<endl;
 
-	if(k<0) return 0;
+	//if(k<0) return 0;
 
 	if(k==0) {
 		if (j==0) return 1;
@@ -24,8 +24,11 @@ int solve(int i, int j, int k) {
 	if(i==n) return 0;
 
 	if(dp[i][j][k]!=-1) return dp[i][j][k];
+	
 
-	dp[i][j][k] = solve(i+1, (j+arr[i+1])%d, k-1) + solve(i+1, j%d, k);
+	//NOTICE:
+	//MODULO FUNCTION IS SPECIAL -> C++ does not give correct answer for negative numbers. 
+	dp[i][j][k] = solve(i+1, (((j+arr[i])%d)+d)%d, k-1) + solve(i+1, j%d, k);
 
 	return dp[i][j][k];
 }
@@ -47,7 +50,7 @@ int main() {
 
 		for(int i=0; i<q; i++) {
 			cin >> d >> m;
-			memset(dp, 0, sizeof(dp));
+			memset(dp, -1, sizeof(dp));
 
 			//solve(0, arr[0], m-1);
 			//solve(0, 0, m); 

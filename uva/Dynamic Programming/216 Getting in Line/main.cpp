@@ -2,6 +2,8 @@
 #include <cmath>
 #include <climits>
 #include <iomanip>
+#include <algorithm>
+#include <cstring>
 
 using namespace std;
 
@@ -48,7 +50,7 @@ int main() {
 			cout << "Cable requirement to connect ("<<x[ans[i]] << "," << y[ans[i]] << ") to (" << x[ans[i+1]] << "," << y[ans[i+1]] << ") is " << dist(x[ans[i]], y[ans[i]], x[ans[i+1]], y[ans[i+1]])+16 << " feet."<<endl;
 		}
 
-		cout << "Number of feet of cable required is " << min + 16*(n-1) << endl;
+		cout << "Number of feet of cable required is " << min + 16*(n-1) <<"." << endl;
 
 		cin >> n;
 		cn++;
